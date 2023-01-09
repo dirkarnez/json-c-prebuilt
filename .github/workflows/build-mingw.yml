@@ -54,6 +54,11 @@ jobs:
             -DCMAKE_INSTALL_PREFIX="cmake-build/${{ env.cmakeInstallationPath }}" -B./cmake-build &&^
             cd cmake-build && cmake --build . && cmake --install . 
             
+      - shell: cmd
+        run: |
+          cd /d "C:/json-c/cmake-build/${{ env.cmakeInstallationPath }}" &&^
+          dir
+          
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
