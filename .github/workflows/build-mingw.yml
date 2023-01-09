@@ -18,7 +18,11 @@ jobs:
     steps:
       - name: git clone
         shell: cmd
-        run: git clone --recursive https://github.com/json-c/json-c.git && cd json-c && git checkout ${{ env.tagName }}
+        run: |
+          cd /d "C:\" &&^
+          git clone --recursive https://github.com/json-c/json-c.git &&^
+          cd json-c &&^
+          git checkout ${{ env.tagName }}
         
       - name: curl x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
         shell: cmd
@@ -44,7 +48,7 @@ jobs:
             ${{ github.workspace }}\PortableGit-2.38.1-64-bit\bin;^
             ${{ github.workspace }}\cmake-3.24.0-windows-x86_64\bin;^
             gcc --version &&^
-            cd json-c &&^
+            cd /d "C:\json-c" &&^
             cmake.exe -G "MinGW Makefiles" ^
             -DCMAKE_BUILD_TYPE=Release ^
             -DCMAKE_INSTALL_PREFIX="cmake-build/${{ env.cmakeInstallationPath }}" -B./cmake-build &&^
@@ -54,12 +58,12 @@ jobs:
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          directory: "json-c/cmake-build/${{ env.cmakeInstallationPath }}"
+          directory: "C:/json-c/cmake-build/${{ env.cmakeInstallationPath }}"
           filename: "${{ env.mingwTargetZip }}"
           
       - name: Release prebuilt
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "json-c/cmake-build/${{ env.cmakeInstallationPath }}/${{ env.mingwTargetZip }}"
+          artifacts: "C:/json-c/cmake-build/${{ env.cmakeInstallationPath }}/${{ env.mingwTargetZip }}"
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
